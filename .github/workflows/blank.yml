@@ -21,4 +21,4 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y groovy
     - name: Run Groovy script
       run: |
-        groovy ./.github/workflows/script.groovy
+        groovy .github/workflows/script.groovy

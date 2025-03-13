@@ -1,0 +1,21 @@
+name: Groovy Example
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Groovy
+        uses: wtfjoke/setup-groovy@v2
+        with:
+          groovy-version: '4.x'  # Or specify a specific version like '4.0.9'
+
+      - name: Run Groovy script
+        run: |
+          echo "Running Groovy script..."
+          groovy -cp . script.groovy
+          echo "Groovy script finished."

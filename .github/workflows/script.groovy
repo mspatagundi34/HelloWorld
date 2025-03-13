@@ -3,7 +3,7 @@
 import groovy.json.JsonSlurper
 
 // Read the JSON file
-def jsonFile = new File('Config.json')
+def jsonFile = new File('.github/workflows/Config.json')
 def jsonSlurper = new JsonSlurper()
 def configs = jsonSlurper.parse(jsonFile)
 

@@ -34,4 +34,5 @@ jobs:
           git config --local user.name "mspatagundi34"
           git add .
           git commit -m "Update project files and committed changes"
+          git pull
           git push --set-upstream origin feature-branch-1

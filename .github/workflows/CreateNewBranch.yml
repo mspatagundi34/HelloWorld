@@ -17,11 +17,10 @@ jobs:
           # Or, if you want to create a new branch and switch to it immediately:
           # git checkout -b new-branch-name
 
-      - name: Set Maven Version
+      - name: Modify File
         run: |
-          mvn versions:set -DnewVersion="1.2.3"
-        env:
-          MAVEN_OPTS: -Dmaven.repo.local=~/.m2/repository
+          echo "Adding a new line to the file" >> ./README.md
+          echo "This line was added by GitHub Actions" >> ./README.md
 
       - name: Commit Changes
         run: |

@@ -2,6 +2,11 @@ name: Create Branch and Commit
 
 on:
   workflow_dispatch: # Trigger the workflow manually
+    inputs:
+      feature_branch:
+        description: 'Feature Branch Name'
+        required: true
+        default: 'feature-branch-2'
 
 jobs:
   update_version:
@@ -13,7 +18,7 @@ jobs:
        
       - name: Create a new branch
         run: |
-          git checkout feature-branch-1 || git checkout -b feature-branch-1
+          git checkout '${{ github.event.inputs.feature_branch }}' || git checkout -b '${{ github.event.inputs.feature_branch }}'
           # Or, if you want to create a new branch and switch to it immediately:
           # git checkout -b new-branch-name
           # git pull origin feature-branch-1
@@ -33,9 +38,9 @@ jobs:
         run: |
           git config --local user.email "mspatagundi34@gmail.com"
           git config --local user.name "mspatagundi34"
-          # git pull origin feature-branch-1
+          # git pull origin '${{ github.event.inputs.feature_branch }}'
           git add .
           git commit -m "Update project files and committed changes"
           # git push --set-upstream origin feature-branch-1
           # git push origin feature-branch-1
-          git push -f origin feature-branch-1
+          git push -f origin '${{ github.event.inputs.feature_branch }}'

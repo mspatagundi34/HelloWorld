@@ -13,7 +13,7 @@ jobs:
        
       - name: Create a new branch
         run: |
-          git checkout -b new-branch-name
+          git checkout feature-branch-1 || git checkout -b feature-branch-1
           # Or, if you want to create a new branch and switch to it immediately:
           # git checkout -b new-branch-name
 
@@ -33,5 +33,5 @@ jobs:
           git config --local user.email "mspatagundi34@gmail.com"
           git config --local user.name "mspatagundi34"
           git add .
-          git commit -m "Update Maven artifact version to 1.2.3"
+          git commit -m "Update project files and committed changes"
           git push --set-upstream origin new-branch-name

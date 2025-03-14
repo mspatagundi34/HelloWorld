@@ -25,7 +25,7 @@ jobs:
       - name: Run Groovy script
         run: |
           echo "Running Groovy script..."
-          groovy .github/workflows/script.groovy
+          groovy .github/workflows/MuleMigration-v3.groovy
           echo "Groovy script finished."
 
       - name: Commit Changes

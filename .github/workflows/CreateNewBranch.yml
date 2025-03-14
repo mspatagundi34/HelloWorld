@@ -16,7 +16,7 @@ jobs:
           git checkout feature-branch-1 || git checkout -b feature-branch-1
           # Or, if you want to create a new branch and switch to it immediately:
           # git checkout -b new-branch-name
-          git pull origin main
+          git pull origin feature-branch-1
 
       - name: Set up Groovy
         uses: wtfjoke/setup-groovy@v2

@@ -17,10 +17,16 @@ jobs:
           # Or, if you want to create a new branch and switch to it immediately:
           # git checkout -b new-branch-name
 
-      - name: Modify File
+      - name: Set up Groovy
+        uses: wtfjoke/setup-groovy@v2
+        with:
+          groovy-version: '4.x'  # Or specify a specific version like '4.0.9'
+
+      - name: Run Groovy script
         run: |
-          echo "Adding a new line to the file" >> ./README.md
-          echo "This line was added by GitHub Actions" >> ./README.md
+          echo "Running Groovy script..."
+          groovy .github/workflows/script.groovy
+          echo "Groovy script finished."
 
       - name: Commit Changes
         run: |

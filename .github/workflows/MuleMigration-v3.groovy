@@ -74,7 +74,18 @@ if(!targetNode2){
         }
     }
 }
-
+	// Remove a specific dependency
+	def dependencyToRemove = xml.dependencies.find { dependency ->
+	    dependency.groupId == "com.mulesoft.modules" && dependency.artifactId == "mule-latency-connector"
+	}
+	
+	if (dependencyToRemove) {
+	    println("Removing mule-latency-connector dependency...")
+	    pom.dependencies.remove(dependencyToRemove)
+	    println("mule-latency-connector dependency removed.")
+	} else {
+	    println("mule-latency-connector dependency not found.")
+	}
 // Add new dependency
 //xml.dependencies.appendNode {
     //dependency {

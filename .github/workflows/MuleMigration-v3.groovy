@@ -86,7 +86,7 @@ if(!targetNode2){
     //}
 //}
 
-//XmlUtil.serialize(xml, new PrintWriter(new File("pom.xml")))
+XmlUtil.serialize(xml, new PrintWriter(new File("pom.xml")))
 
 
 println "Finished Updating pom.xml"
@@ -100,7 +100,7 @@ jsonData.javaSpecificVersions = ["17"]
 
 println "Min Mule Version = ${jsonData.minMuleVersion}"
 
-//new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
+new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
 
 
 

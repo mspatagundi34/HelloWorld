@@ -28,4 +28,4 @@ jobs:
           git config --local user.name "mspatagundi34"
           git add .
           git commit -m "Update Maven artifact version to 1.2.3"
-          git push
+          git push --set-upstream origin new-branch-name

@@ -14,7 +14,7 @@ jobs:
         run: |
           git checkout -b new-branch-name
           # Or, if you want to create a new branch and switch to it immediately:
-          # git checkout -b new-branch-name
+          git checkout -b new-branch-name
 
       - name: Stage and Commit Changes
         run: |

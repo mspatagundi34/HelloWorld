@@ -4,22 +4,29 @@ on:
   workflow_dispatch: # Trigger the workflow manually
 
 jobs:
-  create-branch-and-commit:
+  update_version:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+       
       - name: Create a new branch
         run: |
           git checkout -b new-branch-name
           # Or, if you want to create a new branch and switch to it immediately:
           git checkout -b new-branch-name
 
-      - name: Stage and Commit Changes
+      - name: Set Maven Version
         run: |
-          git config --global user.email "mspatagundi34@gmail.com"
-          git config --global user.name "mspatagundi34"
+          mvn versions:set -DnewVersion="1.2.3"
+        env:
+          MAVEN_OPTS: -Dmaven.repo.local=~/.m2/repository
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "mspatagundi34@gmail.com"
+          git config --local user.name "mspatagundi34"
           git add .
-          git commit -m "Initial commit"
-          git push -u origin new-branch-name
+          git commit -m "Update Maven artifact version to 1.2.3"
+          git push

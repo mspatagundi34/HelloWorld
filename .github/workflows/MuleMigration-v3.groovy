@@ -32,13 +32,23 @@ xml.build.plugins.plugin.each{ plugin ->
 }
 
 // Update dependency version
-xml.dependencies.dependency.each{ dependency ->
-    if(dependency.groupId == "org.mule.connectors" && dependency.artifactId == "mule-http-connector"){
-        dependency.version = newVersion
+//xml.dependencies.dependency.each{ dependency ->
+   // if(dependency.groupId == "org.mule.connectors" && dependency.artifactId == "mule-http-connector"){
+       // dependency.version = newVersion
+       // println "Updated my-library version to $newVersion"
+    //}
+//}
+
+def depData = new JsonSlurper().parseText(new File(".github/workflows/Dependency-Config.json").text)
+
+depData.dependencies.each{ dep ->
+    xml.dependencies.dependency.each{ dependency ->
+    if(dependency.groupId == dep.groupId && dependency.artifactId == dep.artifactId){
+        dependency.version = dep.version
         println "Updated my-library version to $newVersion"
     }
 }
-
+    }
 
 // Check if the target node exists
 def targetNode1 = xml.dependencies.'*'.find{ it.groupId == 'org.grails.plugins' }
@@ -116,11 +126,4 @@ new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
 
 
 println "Finished Updating artifact.json"
-
-def depData = new JsonSlurper().parseText(new File(".github/workflows/Dependency-Config.json").text)
-
-depData.dependencies.each{ dependency ->
-    def grpId = dependency.artifactId
-        println "ArtifactId to $grpId"
-    }
 

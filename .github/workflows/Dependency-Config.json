@@ -7,19 +7,9 @@
                 "version" : "1.10.12"
             },
             {
-                "name" : "Product1",
-                "proxies" : ["'Proxy1', 'Proxy2'"],
-                "attributes" : [{"name":"Test1","value":"abc"}]
-            },
-        {
-                "name" : "Product1",
-                "proxies" : ["'Proxy1', 'Proxy2'"],
-                "attributes" : [{"name":"Test1","value":"abc"}]
-            },
-           {
-                "name" : "Product1",
-                "proxies" : ["'Proxy1', 'Proxy2'"],
-                "attributes" : [{"name":"Test1","value":"abc"}]
-            }       
+                "groupId" : "org.mule.connectors",
+                "artifactId" : "mule-sockets-connector",
+                "version" : "1.2.0"
+            }     
     ]
 }

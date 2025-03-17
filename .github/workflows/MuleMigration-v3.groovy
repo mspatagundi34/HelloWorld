@@ -116,3 +116,11 @@ new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
 
 
 println "Finished Updating artifact.json"
+
+def depData = new JsonSlurper().parseText(new File(".github/workflows/Dependency-Config.json").text)
+
+depData.dependencies.each{ dependency ->
+    def grpId = dependency.groupId
+        println "GroupId to $grpId"
+    }
+}

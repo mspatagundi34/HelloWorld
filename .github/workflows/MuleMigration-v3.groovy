@@ -123,4 +123,4 @@ depData.dependencies.each{ dependency ->
     def grpId = dependency.artifactId
         println "ArtifactId to $grpId"
     }
-}
+

@@ -135,7 +135,7 @@ def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
-        def configXml = new XmlSlurper().parseText(file)
+        def configXml = new XmlSlurper().parse(file)
 
         // Find the element containing the search string
         def element = configXml.find { it.text() == searchString }

@@ -34,29 +34,43 @@ configData.dependencies.each{ conf ->
 }
     }
 
-// Check if the depdendency node exists
-def targetNode1 = xml.dependencies.'*'.find{ it.groupId == 'org.grails.plugins' }
 
+// Update exchange repo url
+    xml.repositories.repository.each{ repo ->
+    if(repo.id == "anypoint-exchange-v2"){
+        repo.id = "anypoint-exchange-v3"
+	repo.url = "https://maven.anypoint.mulesoft.com/api/v3/maven"
+    }
+}
+    
+
+// Check if the depdendency node exists
+def targetNode1 = xml.dependencies.'*'.find{ it.groupId == 'mule-db-connector' }
+
+def targetNode2 = xml.dependencies.'*'.find{ it.groupId == 'javax.xml.bind' }
 // Check if the plugin node exists
-def targetNode2 = xml.pluginRepositories.'*'.find{ it.id == 'synergian-repo' }
+def targetNode3 = xml.pluginRepositories.'*'.find{ it.id == 'synergian-repo' }
 
 // Append the new dependency node only if the target node is not present
-if(!targetNode1){
-   println "Dependency Node Not present"
+if(targetNode1){
+   println "DataBase depdendency present"
  // Add new dependency
+if(!targetNode2){
+println "XML Bind depdendency not present"
   xml.dependencies.appendNode {
     dependency {
-        groupId 'org.grails.plugins'
-        artifactId 'tomcat'
-        version '7.0.42'
-        type 'zip'
-        scope 'provided'
+        groupId 'javax.xml.bind'
+        artifactId 'jaxb-api'
+        version '2.3.1'
+        //type 'zip'
+        //scope 'provided'
     }
+}
 }
 }
 
 // Append the new pluginRepository node only if the target node is not present
-if(!targetNode2){
+if(!targetNode3){
    println "PluginRepository Node Not present"
  // Add new PluginRepository
   xml.pluginRepositories.appendNode {

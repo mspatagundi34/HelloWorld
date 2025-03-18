@@ -140,7 +140,12 @@ folder.eachFile(FileType.FILES) { File file ->
 	    def configXml = file.getText()
         // Find the element containing the search string
        // def element = configXml.find { it.text() == searchString }
-	configXml.replaceAll(searchString,newValue);
+	    if (configXml.contains(searchString)) {
+    println "String '$searchString' found in the file."
+} else {
+    println "String '$searchString' not found in the file."
+}
+	//configXml.replaceAll(searchString,newValue);
        println "$configXml"
     }
 }

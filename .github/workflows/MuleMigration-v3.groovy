@@ -135,9 +135,9 @@ def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
-        def configXml = new XmlParser().parseText(file)
-		//new XmlSlurper().parse(file)
-
+        //def configXml = new XmlSlurper().parse(file)
+	def xmlFile = new File(file) 
+	    def configXml = xmlFile.getText()
         // Find the element containing the search string
         def element = configXml.mule.'*'.find { it.text() == searchString }
 

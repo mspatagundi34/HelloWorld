@@ -13,6 +13,11 @@
                 "groupId" : "org.mule.connectors",
                 "artifactId" : "mule-sockets-connector",
                 "version" : "1.5.0"
-            }     
+            } ,
+            {
+                "groupId" : "javax.xml.bind",
+                "artifactId" : "jaxb-api",
+                "version" : "2.3.1"
+            }       
     ]
 }

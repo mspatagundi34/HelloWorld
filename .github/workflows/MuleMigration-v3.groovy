@@ -3,7 +3,7 @@ import groovy.io.FileType
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
-println "Start Updating pom.xml"
+println "=====Start Updating pom.xml====="
 
 // Load the pom.xml
 def pomFile = new File("pom.xml")
@@ -22,7 +22,7 @@ xml.build.plugins.plugin.each{ plugin ->
         plugin.version = "3.2.0"
 	plugin.configuration.source = "1.17"
 	plugin.configuration.target = "1.17"
-        println "Updated $plugin"
+        println "Updated $plugin.groupId"
    }
 }
 
@@ -32,7 +32,7 @@ configData.dependencies.each{ conf ->
     xml.dependencies.dependency.each{ dependency ->
     if(dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId){
         dependency.version = conf.version
-        println "Updated artifact $dependency.artifactId  to $newVersion"
+        println "Updated artifact $dependency.artifactId  to $conf.version"
     }
 }
     }
@@ -87,10 +87,10 @@ if(!targetNode2){
 
 XmlUtil.serialize(xml, new PrintWriter(new File("pom.xml")))
 
-println "Finished Updating pom.xml"
+println "=====Finished Updating pom.xml====="
 //-----------------------------------------------------------------------------------//
 
-println "Start Updating mule-artifact.json"
+println "=====Start Updating mule-artifact.json====="
 // Load the artifact.json file
 def jsonData = new JsonSlurper().parseText(new File("mule-artifact.json").text)
 
@@ -105,7 +105,7 @@ println "Finished Updating mule-artifact.json"
 
 //-----------------------------------------------------------------------------------//
 
-println "Start Updating mule config xml files"
+println "=====Start Updating mule config xml files====="
 def folderPath = "src/main/mule" // Replace with the actual path
 def searchString = "Hello World" // Replace with the string to search for
 def newValue = "Hi World" // Replace with the new value
@@ -128,4 +128,4 @@ XmlUtil.serialize(modifiedContent, new PrintWriter(file))
 }      
     }
 }
-println "Finished Updating mule config xml files"
+println "=====Finished Updating mule config xml files====="

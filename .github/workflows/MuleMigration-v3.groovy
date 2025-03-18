@@ -135,12 +135,25 @@ def folder = new File(folderPath)
 folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
         def xml = new XmlSlurper().parse(file)
-	def nodes = xml.**.text() == searchString
 
-// Replace the text in the found nodes
-	nodes.each { it.replaceNode(newValue) }
         // Find the element containing the search string
-        
+        def element = xml.find { it.text() == searchString }
+
+        if (element) {
+            // Modify the element
+            element.parent().find { it.name() == elementToModify }?.value = newValue
+
+            // Serialize the modified XML back to a string
+            def modifiedXmlString = XmlUtil.serialize(xml)
+
+            // Write the modified XML back to the file (optional)
+            // file.text = modifiedXmlString
+           // println(modifiedXmlString)
+            println("Modified XML for ${file.name}:")
+            println(modifiedXmlString)
+        } else {
+            println("String '${searchString}' not found in ${file.name}")
+        }
     }
 }
 

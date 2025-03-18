@@ -130,7 +130,7 @@ def folderPath = "src/main/mule" // Replace with the actual path
 def searchString = "Hello World" // Replace with the string to search for
 def elementToModify = "elementToModify" // Replace with the element to modify
 def newValue = "Hi World" // Replace with the new value
-
+def outputFile = new File(".github/workflows/output_file.txt")
 def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) { File file ->
@@ -141,7 +141,12 @@ folder.eachFile(FileType.FILES) { File file ->
         // Find the element containing the search string
        // def element = configXml.find { it.text() == searchString }
 	    if (configXml.contains(searchString)) {
+		    
     println "String '$searchString' found in the file."
+def modifiedContent = fileContent.replaceAll(oldString, newString)
+
+// Write the modified content back to the file
+outputFile.text = modifiedContent
 } else {
     println "String '$searchString' not found in the file."
 }

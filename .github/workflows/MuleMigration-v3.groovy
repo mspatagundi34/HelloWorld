@@ -134,17 +134,17 @@ def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
-        def xml = new XmlSlurper().parse(file)
+        def configXml = new XmlSlurper().parse(file)
 
         // Find the element containing the search string
-        def element = xml.find { it.text() == searchString }
+        def element = configXml.find { it.text() == searchString }
 
         if (element) {
             // Modify the element
-            element.parent().find { it.name() == elementToModify }?.value = newValue
+            element.parent().find { it.text() == searchString }?.value = newValue
 
             // Serialize the modified XML back to a string
-            def modifiedXmlString = XmlUtil.serialize(xml)
+            def modifiedXmlString = XmlUtil.serialize(configXml)
 
             // Write the modified XML back to the file (optional)
             // file.text = modifiedXmlString

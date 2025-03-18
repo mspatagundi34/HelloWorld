@@ -23,6 +23,14 @@ xml.build.plugins.plugin.each{ plugin ->
 	plugin.configuration.target = "17"
         println "Updated $plugin.groupId"
    }
+
+	// Note: We may need to remove this
+	if(plugin.groupId == 'org.apache.maven.plugins' && plugin.artifactId == "maven-compiler-plugin"){
+	        plugin.version = "3.9.4"
+		plugin.configuration.source = "17"
+		plugin.configuration.target = "17"
+	        println "Updated $plugin.groupId"
+   }
 }
 
 configData.dependencies.each{ conf ->
@@ -90,7 +98,7 @@ if(!targetNode3){
 	
 	if (dependencyToRemove) {
 	    println("Removing mule-latency-connector dependency...")
-	    pom.dependencies.remove(dependencyToRemove)
+	    xml.dependencies.remove(dependencyToRemove)
 	    println("mule-latency-connector dependency removed.")
 	} else {
 	    println("mule-latency-connector dependency not found.")

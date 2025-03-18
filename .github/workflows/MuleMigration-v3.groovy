@@ -11,22 +11,19 @@ def xml = new XmlSlurper( false, false ).parse(pomFile)
 
 //Read config file
 def configData = new JsonSlurper().parseText(new File(".github/workflows/Config.json").text)
-def newVersion = "2.0.1"
 
-xml.properties['app.runtime'] = "4.9.0"
-xml.properties['mule.maven.plugin.version'] = "4.3.0"
+xml.properties['app.runtime'] = configData["app.runtime"]
+xml.properties['mule.maven.plugin.version'] = configData["mule.maven.plugin.version"]
 
-// Update plugin version
+// Update maven compiler plugin 
 xml.build.plugins.plugin.each{ plugin ->
     if(plugin.groupId == 'org.apache.maven.plugins' && plugin.artifactId == "maven-clean-plugin"){
         plugin.version = "3.2.0"
-	plugin.configuration.source = "1.17"
-	plugin.configuration.target = "1.17"
+	plugin.configuration.source = "17"
+	plugin.configuration.target = "17"
         println "Updated $plugin.groupId"
    }
 }
-
-//def depData = new JsonSlurper().parseText(new File(".github/workflows/Dependency-Config.json").text)
 
 configData.dependencies.each{ conf ->
     xml.dependencies.dependency.each{ dependency ->
@@ -94,8 +91,8 @@ println "=====Start Updating mule-artifact.json====="
 // Load the artifact.json file
 def jsonData = new JsonSlurper().parseText(new File("mule-artifact.json").text)
 
-jsonData.minMuleVersion = "4.9.0"
-jsonData.javaSpecificVersions = ["17"]
+jsonData.minMuleVersion = configData["app.runtime"]
+jsonData.javaSpecificVersions = configData["javaSpecificVersions"]
 
 println "Min Mule Version = ${jsonData.minMuleVersion}"
 

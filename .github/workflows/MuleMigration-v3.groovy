@@ -10,7 +10,7 @@ def pomFile = new File("pom.xml")
 def xml = new XmlSlurper( false, false ).parse(pomFile)
 
 // update artifact version
-def version = (xml.project.version).split(".") 
+def version[] = (xml.project.version).split(".") 
  println "version $version[0]"
 
 //Read config file

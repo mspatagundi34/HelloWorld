@@ -123,7 +123,24 @@ println "Min Mule Version = ${jsonData.minMuleVersion}"
 
 new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
 
-
-
 println "Finished Updating artifact.json"
+
+def folderPath = "src" // Replace with the actual path
+def searchString = "Hello World" // Replace with the string to search for
+def elementToModify = "elementToModify" // Replace with the element to modify
+def newValue = "Hi World" // Replace with the new value
+
+def folder = new File(folderPath)
+
+folder.eachFile(FileType.FILES) { File file ->
+    if (file.name.toLowerCase().endsWith(".xml")) {
+        def xml = new XmlSlurper().parse(file)
+	def nodes = xml.**.text() == searchString
+
+// Replace the text in the found nodes
+	nodes.each { it.replaceNode(newValue) }
+        // Find the element containing the search string
+        
+    }
+}
 

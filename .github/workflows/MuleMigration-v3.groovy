@@ -145,6 +145,7 @@ folder.eachFile(FileType.FILES) { File file ->
     println "String '$searchString' found in the file."
 def modifiedContent = configXml.replaceAll(searchString, newValue)
  println "$modifiedContent"
+XmlUtil.serialize(modifiedContent, new PrintWriter(file))
 // Write the modified content back to the file
 //outputFile.text = modifiedContent
 } else {

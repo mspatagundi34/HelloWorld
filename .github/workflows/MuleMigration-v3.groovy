@@ -145,13 +145,7 @@ folder.eachFile(FileType.FILES) { File file ->
     println "String '$searchString' found in the file."
 def modifiedContent = configXml.replaceAll(searchString, newValue)
  println "$modifiedContent"
-  def xmlPrinter = new XmlNodePrinter()
-     def xmlString = xmlPrinter.print(modifiedContent)
-     //new File("path/to/your/output.xml").write(xmlString)
-		    XmlUtil.serialize(xmlString, new PrintWriter(file))
-//XmlUtil.serialize(modifiedContent, new PrintWriter(file))
-// Write the modified content back to the file
-//outputFile.text = modifiedContent
+XmlUtil.serialize(modifiedContent, new PrintWriter(file))
 } else {
     println "String '$searchString' not found in the file."
 }

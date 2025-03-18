@@ -53,7 +53,7 @@ configData.dependencies.each{ conf ->
     
 
 // Check if the depdendency node exists
-def targetNode1 = xml.dependencies.'*'.find{ it.groupId == 'mule-db-connector' }
+def targetNode1 = xml.dependencies.'*'.find{ it.artifactId == 'mule-db-connector' }
 
 def targetNode2 = xml.dependencies.'*'.find{ it.groupId == 'javax.xml.bind' }
 // Check if the plugin node exists

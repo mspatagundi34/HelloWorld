@@ -1,29 +1,18 @@
 {
-    "bundles":
+    "app.runtime" : "4.9.0",
+    "mule.maven.plugin.version": "4.3.0",
+    "javaSpecificVersions": ["17"],
+    "dependencies":
     [
         {
-            "product":{
-                "name" : "Product1",
-                "proxies" : ["'Proxy1', 'Proxy2'"],
-                "attributes" : [{"name":"Test1","value":"abc"}]
+                "groupId" : "org.mule.connectors",
+                "artifactId" : "mule-http-connector",
+                "version" : "1.10.12"
             },
-            "app":{
-                "name":"App1",
-                "attributes": [{"name": "attribute1","value": "null"}],
-                "developer": "rohit@example.com"
-            }
-        },
-        {
-            "product":{
-                "name" : "Product2",
-                "proxies" : ["'Proxy1', 'Proxy2'"],
-                "attributes" : [{"name":"Test2","value":"xyz"}]
-            },
-            "app":{
-                "name":"App1",
-                "attributes": [{"name": "attribute2","value": "null"}],
-                "developer": "guifalourd@example.com"
-            }
-        }
+            {
+                "groupId" : "org.mule.connectors",
+                "artifactId" : "mule-sockets-connector",
+                "version" : "1.5.0"
+            }     
     ]
 }

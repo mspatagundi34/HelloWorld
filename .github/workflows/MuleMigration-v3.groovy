@@ -125,7 +125,7 @@ new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
 
 println "Finished Updating artifact.json"
 
-def folderPath = ".src/main/mule" // Replace with the actual path
+def folderPath = "src/main/mule" // Replace with the actual path
 def searchString = "Hello World" // Replace with the string to search for
 def elementToModify = "elementToModify" // Replace with the element to modify
 def newValue = "Hi World" // Replace with the new value

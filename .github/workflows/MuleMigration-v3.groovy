@@ -9,6 +9,8 @@ println "Start Updating pom.xml"
 def pomFile = new File("pom.xml")
 def xml = new XmlSlurper( false, false ).parse(pomFile)
 
+//Read config file
+def configData = new JsonSlurper().parseText(new File(".github/workflows/Config.json").text)
 def newVersion = "2.0.1"
 
 xml.properties['app.runtime'] = "4.9.0"
@@ -22,16 +24,15 @@ xml.build.plugins.plugin.each{ plugin ->
 	plugin.configuration.target = "1.17"
         println "Updated $plugin"
    }
-
 }
 
-def depData = new JsonSlurper().parseText(new File(".github/workflows/Dependency-Config.json").text)
+//def depData = new JsonSlurper().parseText(new File(".github/workflows/Dependency-Config.json").text)
 
-depData.dependencies.each{ dep ->
+configData.dependencies.each{ conf ->
     xml.dependencies.dependency.each{ dependency ->
-    if(dependency.groupId == dep.groupId && dependency.artifactId == dep.artifactId){
-        dependency.version = dep.version
-        println "Updated my-library version to $newVersion"
+    if(dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId){
+        dependency.version = conf.version
+        println "Updated artifact $dependency.artifactId  to $newVersion"
     }
 }
     }

@@ -9,6 +9,10 @@ println "=====Start Updating pom.xml====="
 def pomFile = new File("pom.xml")
 def xml = new XmlSlurper( false, false ).parse(pomFile)
 
+// update artifact version
+def version = (xml.version).split(".") 
+ println "version $version[0]"
+
 //Read config file
 def configData = new JsonSlurper().parseText(new File(".github/workflows/Config.json").text)
 

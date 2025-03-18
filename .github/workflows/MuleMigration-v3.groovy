@@ -143,7 +143,7 @@ folder.eachFile(FileType.FILES) { File file ->
 	    if (configXml.contains(searchString)) {
 		    
     println "String '$searchString' found in the file."
-def modifiedContent = fileContent.replaceAll(searchString, newValue)
+def modifiedContent = configXml.replaceAll(searchString, newValue)
 
 // Write the modified content back to the file
 outputFile.text = modifiedContent

@@ -139,23 +139,9 @@ folder.eachFile(FileType.FILES) { File file ->
 	//def xmlFile = new File(file) 
 	    def configXml = file.getText()
         // Find the element containing the search string
-        def element = configXml.find { it.text() == searchString }
-
-        if (element) {
-            // Modify the element
-            element.find { it.text() == searchString }?.value = newValue
-
-            // Serialize the modified XML back to a string
-            def modifiedXmlString = XmlUtil.serialize(configXml)
-
-            // Write the modified XML back to the file (optional)
-            // file.text = modifiedXmlString
-           // println(modifiedXmlString)
-            println("Modified XML for ${file.name}:")
-            println(modifiedXmlString)
-        } else {
-            println("String '${searchString}' not found in ${file.name}")
-       }
+       // def element = configXml.find { it.text() == searchString }
+	configXml.replaceAll(searchString,newValue);
+       println "$configXml"
     }
 }
 

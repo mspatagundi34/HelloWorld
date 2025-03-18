@@ -135,14 +135,14 @@ def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
-        def configXml = new XmlSlurper().parse(file)
+        def configXml = new XmlSlurper().parseText(file)
 
         // Find the element containing the search string
-        def element = configXml.'*'.find { it.text() == searchString }
+        def element = configXml.find { it.text() == searchString }
 
         if (element) {
             // Modify the element
-            element.'*'.find { it.text() == searchString }?.value = newValue
+            element.find { it.text() == searchString }?.value = newValue
 
             // Serialize the modified XML back to a string
             def modifiedXmlString = XmlUtil.serialize(configXml)

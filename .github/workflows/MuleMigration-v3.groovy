@@ -3,20 +3,13 @@ import groovy.io.FileType
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 
+println "Start Updating pom.xml"
+
 // Load the pom.xml
 def pomFile = new File("pom.xml")
 def xml = new XmlSlurper( false, false ).parse(pomFile)
 
 def newVersion = "2.0.1"
-
-//xml.appendNode {
-   // pluginRepositories {
-        //pluginRepository {
-           // id 'synergian-repo'
-            //url 'https://raw.github.com/synergian/wagon-git/releases'
-        //}
-    //}
-//}
 
 xml.properties['app.runtime'] = "4.9.0"
 xml.properties['mule.maven.plugin.version'] = "4.3.0"
@@ -32,14 +25,6 @@ xml.build.plugins.plugin.each{ plugin ->
 
 }
 
-// Update dependency version
-//xml.dependencies.dependency.each{ dependency ->
-   // if(dependency.groupId == "org.mule.connectors" && dependency.artifactId == "mule-http-connector"){
-       // dependency.version = newVersion
-       // println "Updated my-library version to $newVersion"
-    //}
-//}
-
 def depData = new JsonSlurper().parseText(new File(".github/workflows/Dependency-Config.json").text)
 
 depData.dependencies.each{ dep ->
@@ -51,9 +36,10 @@ depData.dependencies.each{ dep ->
 }
     }
 
-// Check if the target node exists
+// Check if the depdendency node exists
 def targetNode1 = xml.dependencies.'*'.find{ it.groupId == 'org.grails.plugins' }
 
+// Check if the plugin node exists
 def targetNode2 = xml.pluginRepositories.'*'.find{ it.id == 'synergian-repo' }
 
 // Append the new dependency node only if the target node is not present
@@ -97,24 +83,14 @@ if(!targetNode2){
 	} else {
 	    println("mule-latency-connector dependency not found.")
 	}
-// Add new dependency
-//xml.dependencies.appendNode {
-    //dependency {
-        //groupId 'org.grails.plugins'
-        //artifactId 'tomcat'
-        //version '7.0.42'
-        //type 'zip'
-        //scope 'provided'
-    //}
-//}
 
 XmlUtil.serialize(xml, new PrintWriter(new File("pom.xml")))
 
-
 println "Finished Updating pom.xml"
+//-----------------------------------------------------------------------------------//
 
+println "Start Updating mule-artifact.json"
 // Load the artifact.json file
-
 def jsonData = new JsonSlurper().parseText(new File("mule-artifact.json").text)
 
 jsonData.minMuleVersion = "4.9.0"
@@ -124,33 +100,31 @@ println "Min Mule Version = ${jsonData.minMuleVersion}"
 
 new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
 
-println "Finished Updating artifact.json"
+println "Finished Updating mule-artifact.json"
 
+//-----------------------------------------------------------------------------------//
+
+println "Start Updating mule config xml files"
 def folderPath = "src/main/mule" // Replace with the actual path
 def searchString = "Hello World" // Replace with the string to search for
-def elementToModify = "elementToModify" // Replace with the element to modify
 def newValue = "Hi World" // Replace with the new value
-//def outputFile = new File(".github/workflows/output_file.txt")
+
 def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
         //def configXml = new XmlSlurper().parse(file)
-	//def xmlFile = new File(file) 
 	    def configXml = file.getText()
         // Find the element containing the search string
-       // def element = configXml.find { it.text() == searchString }
 	    if (configXml.contains(searchString)) {
 		    
     println "String '$searchString' found in the file."
 def modifiedContent = configXml.replaceAll(searchString, newValue)
- println "$modifiedContent"
+ //println "$modifiedContent"
 XmlUtil.serialize(modifiedContent, new PrintWriter(file))
 } else {
     println "String '$searchString' not found in the file."
-}
-	//configXml.replaceAll(searchString,newValue);
-      
+}      
     }
 }
-
+println "Finished Updating mule config xml files"

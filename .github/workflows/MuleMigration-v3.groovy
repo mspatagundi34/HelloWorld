@@ -138,11 +138,12 @@ folder.eachFile(FileType.FILES) { File file ->
         def configXml = new XmlSlurper().parse(file)
 
         // Find the element containing the search string
-        def element = configXml.find { it.text() == searchString }
-
-        if (element) {
+        //def element = configXml.find { it.text() == searchString }
+	def nodes = configXml.**.text() == searchString
+	    nodes.each { it.replaceNode(newValue) }
+        //if (element) {
             // Modify the element
-            element.parent().find { it.text() == searchString }?.value = newValue
+            //element.parent().find { it.text() == searchString }?.value = newValue
 
             // Serialize the modified XML back to a string
             def modifiedXmlString = XmlUtil.serialize(configXml)
@@ -152,9 +153,9 @@ folder.eachFile(FileType.FILES) { File file ->
            // println(modifiedXmlString)
             println("Modified XML for ${file.name}:")
             println(modifiedXmlString)
-        } else {
-            println("String '${searchString}' not found in ${file.name}")
-        }
+        //} else {
+            //println("String '${searchString}' not found in ${file.name}")
+       // }
     }
 }
 

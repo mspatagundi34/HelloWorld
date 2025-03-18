@@ -126,7 +126,7 @@ new File("mule-artifact.json").write(new JsonBuilder(jsonData).toPrettyString())
 
 println "Finished Updating artifact.json"
 
-def folderPath = "src/main/mule" // Replace with the actual path
+def folderPath = ".src/main/mule" // Replace with the actual path
 def searchString = "Hello World" // Replace with the string to search for
 def elementToModify = "elementToModify" // Replace with the element to modify
 def newValue = "Hi World" // Replace with the new value
@@ -138,11 +138,11 @@ folder.eachFile(FileType.FILES) { File file ->
         def configXml = new XmlSlurper().parse(file)
 
         // Find the element containing the search string
-        def element = configXml.find { it.text() == searchString }
+        def element = configXml.'*'.find { it.text() == searchString }
 
         if (element) {
             // Modify the element
-            element.parent().find { it.text() == searchString }?.value = newValue
+            element.'*'.find { it.text() == searchString }?.value = newValue
 
             // Serialize the modified XML back to a string
             def modifiedXmlString = XmlUtil.serialize(configXml)

@@ -158,16 +158,19 @@ folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
         //def configXml = new XmlSlurper().parse(file)
 	    def configXml = file.getText()
-        // Find the element containing the search string
-	    if (configXml.contains(searchString)) {
+	configData.replaceData.each{ str ->
+	if (configXml.contains(str.oldValue)) {
 		    
     println "String '$searchString' found in the file."
-def modifiedContent = configXml.replaceAll(searchString, newValue)
+def modifiedContent = configXml.replaceAll(str.oldValue, str.newValue)
  //println "$modifiedContent"
 XmlUtil.serialize(modifiedContent, new PrintWriter(file))
 } else {
     println "String '$searchString' not found in the file."
-}      
+} 
+    }
+        // Find the element containing the search string
+	        
     }
 }
 println "=====Finished Updating mule config xml files====="

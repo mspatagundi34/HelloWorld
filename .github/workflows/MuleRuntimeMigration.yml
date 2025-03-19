@@ -6,7 +6,7 @@ on:
       feature_branch:
         description: 'Feature Branch Name'
         required: true
-        default: 'feature-branch-2'
+        default: 'feature-branch-1'
 
 jobs:
   update_version:

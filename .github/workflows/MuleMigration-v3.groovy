@@ -161,12 +161,12 @@ folder.eachFile(FileType.FILES) { File file ->
 	configData.replaceData.each{ str ->
 	if (configXml.contains(str.oldValue)) {
 		    
-    println "String '$searchString' found in the file."
+    println "String '$str.oldValue' found in the file."
 def modifiedContent = configXml.replaceAll(str.oldValue, str.newValue)
  //println "$modifiedContent"
 XmlUtil.serialize(modifiedContent, new PrintWriter(file))
 } else {
-    println "String '$searchString' not found in the file."
+    println "String '$str.oldValue' not found in the file."
 } 
     }
         // Find the element containing the search string

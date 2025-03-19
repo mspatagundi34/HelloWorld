@@ -149,7 +149,7 @@ def folderPath = "src/main/mule" // Replace with the actual path
 //def searchString = "error.muleMessage" // Replace with the string to search for
 def searchString ="error.errorType.parentErrorType.asString"
 //def newValue = "error.errorMessage" // Replace with the new value
-def newValue = "error.errorType.namespace ++ ":" ++ error.errorType.identifier"
+def newValue = "error.errorType.namespace ++ \":\" ++ error.errorType.identifier"
 
 def folder = new File(folderPath)
 

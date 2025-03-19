@@ -63,10 +63,12 @@ def targetNode2 = xml.dependencies.'*'.find{ it.groupId == 'javax.xml.bind' }
 // Check if the plugin node exists
 def targetNode3 = xml.pluginRepositories.'*'.find{ it.id == 'synergian-repo' }
 
+def targetNode4 = xml.pluginRepositories.'*'.find{ it.artifactId == 'mule-objectstore-connector' }
+
 // Append the new dependency node only if the target node is not present
 if(targetNode1){
    println "DataBase depdendency present"
- // Add new dependency
+ // Add new dependency because for java 17 xml bind dependency needed to mitigate serialization error
 if(!targetNode2){
 println "XML Bind depdendency not present"
   xml.dependencies.appendNode {
@@ -94,6 +96,20 @@ if(!targetNode3){
 	}
         }
     }
+}
+
+// Append the new pluginRepository node only if the target node is not present
+if(!targetNode4){
+   println "Add objectstore dependency because latest studio sometime doesn't include java 17 compatiable objectstore as built in connector"
+ // Add new PluginRepository
+  xml.dependencies.appendNode {
+    dependency {
+        groupId 'org.mule.connectors'
+        artifactId 'mule-objectstore-connector'
+        version '1.2.2'
+	classifier 'mule-plugin'
+    }
+}
 }
 	// Remove a specific dependency
 	def dependencyToRemove = xml.dependencies.find { dependency ->

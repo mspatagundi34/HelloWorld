@@ -20,9 +20,9 @@
                 "version" : "1.14.8"
             } ,
             {
-                "groupId" : "org.mule.connectors",
+                "groupId" : "com.mulesoft.connectors",
                 "artifactId" : "mule-salesforce-connector",
-                "version" : "10.19.2"
+                "version" : "10.22.2"
             } ,
             {
                 "groupId" : "javax.xml.bind",

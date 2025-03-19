@@ -151,11 +151,11 @@ def searchString ="error.errorType.parentErrorType.asString"
 //def newValue = "error.errorMessage" // Replace with the new value
 def newValue = "(error.errorType.namespace default 'MULE') ++ ':' ++ (error.errorType.identifier default 'ANY')"
 	//"error.errorType.namespace ++ \":\" ++ error.errorType.identifier"
-
 def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) { File file ->
     if (file.name.toLowerCase().endsWith(".xml")) {
+	    def isFileUpdated = false
         //def configXml = new XmlSlurper().parse(file)
 	    def configXml = file.getText()
 	configData.replaceData.each{ str ->
@@ -163,13 +163,18 @@ folder.eachFile(FileType.FILES) { File file ->
 		    
     println "String '$str.oldValue' found in the file."
 def modifiedContent = configXml.replaceAll(str.oldValue, str.newValue)
+isFileUpdated = true
+configXml = modifiedContent		
  //println "$modifiedContent"
-XmlUtil.serialize(modifiedContent, new PrintWriter(file))
+//XmlUtil.serialize(modifiedContent, new PrintWriter(file))
 } else {
     println "String '$str.oldValue' not found in the file."
 } 
     }
-        // Find the element containing the search string
+     if(isFileUpdated)
+	    {
+		XmlUtil.serialize(configXml, new PrintWriter(file))    
+	    }// Find the element containing the search string
 	        
     }
 }

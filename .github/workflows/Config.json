@@ -12,7 +12,7 @@
             {
                 "groupId" : "org.mule.connectors",
                 "artifactId" : "mule-sockets-connector",
-                "version" : "1.2.5"
+                "version" : "1.2.4"
             } ,
             {
                 "groupId" : "org.mule.connectors",

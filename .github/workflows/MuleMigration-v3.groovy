@@ -118,7 +118,7 @@ println "=====Start Updating mule-artifact.json====="
 def jsonData = new JsonSlurper().parseText(new File("mule-artifact.json").text)
 
 jsonData.minMuleVersion = configData["app.runtime"]
-jsonData.javaSpecificVersions = configData["javaSpecificVersions"]
+jsonData.javaSpecificationVersions = configData["javaSpecificationVersions"]
 
 println "Min Mule Version = ${jsonData.minMuleVersion}"
 

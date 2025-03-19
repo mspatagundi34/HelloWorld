@@ -1,0 +1,51 @@
+trigger: none  # No automatic trigger; it runs manually
+
+pr: none  # No PR trigger
+
+parameters:
+  - name: feature_branch
+    displayName: 'Feature Branch Name'
+    type: string
+    default: 'feature-branch-2'
+
+stages:
+  - stage: UpdateVersion
+    displayName: "Update Mule Runtime Version"
+    jobs:
+      - job: UpdateVersionJob
+        displayName: "Update Version Job"
+        pool:
+          vmImage: "ubuntu-latest"
+
+        steps:
+          - checkout: self
+
+          - task: JavaToolInstaller@0
+            displayName: "Set up JDK 17"
+            inputs:
+              versionSpec: "17"
+              jdkArchitecture: "x64"
+              jdkSource: "PreInstalled"
+
+          - script: |
+              git checkout '$(feature_branch)' || git checkout -b '$(feature_branch)'
+            displayName: "Create a new branch"
+
+          - task: UsePythonVersion@0
+            displayName: "Set up Groovy"
+            inputs:
+              versionSpec: "4.x"  # Groovy setup alternative
+
+          - script: |
+              echo "Running Groovy script..."
+              groovy .azure-pipelines/MuleMigration-v3.groovy
+              echo "Groovy script finished."
+            displayName: "Run Groovy script"
+
+          - script: |
+              git config --local user.email "mspatagundi34@gmail.com"
+              git config --local user.name "mspatagundi34"
+              git add .
+              git commit -m "Update project files and committed changes"
+              git push -f origin '$(feature_branch)'
+            displayName: "Commit and Push Changes"

@@ -1,7 +1,7 @@
 {
     "app.runtime" : "4.9.0",
     "mule.maven.plugin.version": "4.3.0",
-    "javaSpecificVersions": ["17"],
+    "javaSpecificationVersions": ["17"],
     "dependencies":
     [
         {

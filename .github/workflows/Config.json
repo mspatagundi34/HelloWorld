@@ -15,6 +15,16 @@
                 "version" : "1.2.5"
             } ,
             {
+                "groupId" : "org.mule.connectors",
+                "artifactId" : "mule-db-connector",
+                "version" : "1.14.8"
+            } ,
+            {
+                "groupId" : "org.mule.connectors",
+                "artifactId" : "mule-salesforce-connector",
+                "version" : "10.19.2"
+            } ,
+            {
                 "groupId" : "javax.xml.bind",
                 "artifactId" : "jaxb-api",
                 "version" : "2.3.1"

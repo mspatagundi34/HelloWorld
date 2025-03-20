@@ -131,7 +131,9 @@ if (!targetNode4) {
 }*/
 configData.dependenciesToRemove.each {
     conf ->
-def dependencyToRemove = pomxml.dependencies.'*'.find { it.groupId == conf.groupId && it.artifactId 
+	pomxml.dependencies.children().findAll{it.groupId == conf.groupId && it.artifactId 
+        == conf.artifactId}.replaceNode {}
+/*def dependencyToRemove = pomxml.dependencies.'*'.find { it.groupId == conf.groupId && it.artifactId 
         == conf.artifactId
 }
 	if (dependencyToRemove) {
@@ -141,7 +143,7 @@ def dependencyToRemove = pomxml.dependencies.'*'.find { it.groupId == conf.group
     println("'$conf.artifactId' dependency removed.")
 } else {
     println("remove '$dependencyToRemove'")
-}
+} */
 }
 XmlUtil.serialize(pomxml, new PrintWriter(new File("pom.xml")))
 

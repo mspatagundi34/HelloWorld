@@ -176,9 +176,7 @@ folder.eachFile(FileType.FILES) {
         }
         if (isFileUpdated)
         {
-            //XmlUtil.serialize(configXml, new PrintWriter(file))
-		XmlUtil.serialize(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)), new PrintWriter(file))
-		//file.write(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)))
+		file.write(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)))
 	}// Find the element containing the search string
     }
 }

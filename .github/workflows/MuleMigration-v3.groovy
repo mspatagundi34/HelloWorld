@@ -159,7 +159,10 @@ def folder = new File(folderPath)
 
 //folder.eachFileRecurse(FileType.FILES) {
 folder.eachFileRecurse(FileType.FILES) {
-    File file -> if (file.name.toLowerCase().endsWith(".xml") || file.name.toLowerCase().endsWith(".dwl")) {
+    File file -> 
+	def fileName = file.name.toLowerCase()
+	//if (file.name.toLowerCase().endsWith(".xml") || file.name.toLowerCase().endsWith(".dwl")) {
+	if (fileName.endsWith(".xml") || fileName.endsWith(".dwl")) {
         def isFileUpdated = false
         //def configXml = new XmlSlurper().parse(file)
         def configXml = file.getText()
@@ -177,7 +180,14 @@ folder.eachFileRecurse(FileType.FILES) {
         }
         if (isFileUpdated)
         {
+		if(fileName.endsWith(".xml"))
+		{
 		file.write(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)))
+		}
+		else if(fileName.endsWith(".dwl"))
+		{
+			file.write(configXml)
+		}
 	}// Find the element containing the search string
     }
 }

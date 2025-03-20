@@ -135,9 +135,9 @@ def dependencyToRemove = pomxml.dependencies.'*'.find { it.groupId == conf.group
         == conf.artifactId
 }
 	if (dependencyToRemove) {
-    println("Removing mule-latency-connector dependency...")
-    xml.dependencies.remove(dependencyToRemove)
-    println("mule-latency-connector dependency removed.")
+    println("Removing '$conf.artifactId' dependency...")
+    pomxml.dependencies.remove(dependencyToRemove)
+    println("'$conf.artifactId' dependency removed.")
 } else {
     println("remove '$dependencyToRemove'")
 }

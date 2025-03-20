@@ -140,7 +140,7 @@ def dependencyToRemove = pomxml.dependencies.find {
     xml.dependencies.remove(dependencyToRemove)
     println("mule-latency-connector dependency removed.")
 } else {
-    println("mule-latency-connector dependency not found.")
+    println("remove '$dependencyToRemove'")
 }
 }
 XmlUtil.serialize(pomxml, new PrintWriter(new File("pom.xml")))

@@ -43,6 +43,10 @@
         {
             "oldValue": "error.errorType.parentErrorType.asString",
             "newValue": "(error.errorType.namespace default 'MULE') ++ ':' ++ (error.errorType.identifier default 'ANY')"
+        },
+        {
+            "oldValue": "MuleSoft1",
+            "newValue": "MuleSoft2"
         }
     ]
 }

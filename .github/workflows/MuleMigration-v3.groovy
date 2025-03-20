@@ -184,7 +184,8 @@ new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)
 
 println stringWriter.toString()
 		//file.write(XmlUtil.serialize(new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)))
-		file.write(stringWriter)
+		file.write(stringWriter.toString())
+		//new XmlSlurper(false, false).parse(pomFile)
 	}// Find the element containing the search string
     }
 }

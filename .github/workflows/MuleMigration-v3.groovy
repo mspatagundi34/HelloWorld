@@ -178,14 +178,15 @@ folder.eachFile(FileType.FILES) {
         {
             //XmlUtil.serialize(configXml, new PrintWriter(file))
 		//file.write(XmlUtil.serialize(configXml))
-		def stringWriter = new StringWriter()
-def node = new XmlParser().parseText(configXml);
-new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)
+		//def stringWriter = new StringWriter()
+//def node = new XmlParser().parseText(configXml);
+//new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)
 
-println stringWriter.toString()
+//println stringWriter.toString()
 		//file.write(XmlUtil.serialize(new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)))
-		file.write(stringWriter.toString())
-		//new XmlSlurper(false, false).parse(pomFile)
+		//file.write(stringWriter.toString())
+		def dat = new XmlSlurper(false, false).parse(configXml)
+		file.write(XmlUtil.serialize(dat))
 	}// Find the element containing the search string
     }
 }

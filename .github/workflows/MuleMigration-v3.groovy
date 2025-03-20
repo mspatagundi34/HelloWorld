@@ -157,7 +157,8 @@ def folderPath = "src/main/" // Replace with the actual path
 
 def folder = new File(folderPath)
 
-folder.eachFile(FileType.FILES) {
+//folder.eachFileRecurse(FileType.FILES) {
+folder.eachFileRecurse(FileType.FILES) {
     File file -> if (file.name.toLowerCase().endsWith(".xml")) {
         def isFileUpdated = false
         //def configXml = new XmlSlurper().parse(file)

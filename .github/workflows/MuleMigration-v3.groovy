@@ -121,16 +121,11 @@ if (!targetNode4) {
     }
 }
 // Remove a specific dependency
-/*configData.dependenciesToRemove.each {
-    conf -> pomxml.dependencies.dependency.each {
-        dependency -> if (dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId) {
-             pomxml.dependencies.remove(true)
-    	   println("removed '$conf.artifactId' dependency")
-        }
-    }
-}*/
 configData.dependenciesToRemove.each {
     conf ->
+	def dependencyToRemove = pomxml.dependencies.children().findAll{it.groupId == conf.groupId && it.artifactId 
+        == conf.artifactId}
+	println("remove '$dependencyToRemove'")
 	pomxml.dependencies.children().findAll{it.groupId == conf.groupId && it.artifactId 
         == conf.artifactId}.replaceNode {}
 /*def dependencyToRemove = pomxml.dependencies.'*'.find { it.groupId == conf.groupId && it.artifactId 

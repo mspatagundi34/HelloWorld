@@ -153,7 +153,7 @@ println "Finished Updating mule-artifact.json"
 //-----------------------------------------------------------------------------------//
 
 println "=====Start Updating mule config xml files====="
-def folderPath = "src/main" // Replace with the actual path
+def folderPath = "src/main/" // Replace with the actual path
 
 def folder = new File(folderPath)
 

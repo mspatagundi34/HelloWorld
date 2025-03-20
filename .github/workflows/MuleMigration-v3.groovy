@@ -61,7 +61,7 @@ pomxml.repositories.repository.each {
 def targetNode1 = pomxml.dependencies.'*'.find {
     it.artifactId == 'mule-db-connector'
 }
-println "targetNode1 is '$targetNode3'"
+println "targetNode1 is '$targetNode1'"
 def targetNode2 = pomxml.dependencies.'*'.find {
     it.groupId == 'javax.xml.bind'
 }

@@ -176,8 +176,9 @@ folder.eachFile(FileType.FILES) {
         }
         if (isFileUpdated)
         {
-            XmlUtil.serialize(configXml, new PrintWriter(file))
-        }// Find the element containing the search string
+            //XmlUtil.serialize(configXml, new PrintWriter(file))
+		file.write(XmlUtil.serialize(configXml))
+	}// Find the element containing the search string
     }
 }
 println "=====Finished Updating mule config xml files====="

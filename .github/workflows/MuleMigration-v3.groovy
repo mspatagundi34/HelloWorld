@@ -61,7 +61,7 @@ pomxml.repositories.repository.each {
 def targetNode1 = pomxml.dependencies.'*'.find {
     it.artifactId == 'mule-db-connector'
 }
-println "targetNode1 is '$targetNode1'"
+
 def targetNode2 = pomxml.dependencies.'*'.find {
     it.groupId == 'javax.xml.bind'
 }
@@ -123,11 +123,14 @@ if (!targetNode4) {
 // Remove a specific dependency
 configData.dependenciesToRemove.each {
     conf ->
-	def dependencyToRemove = pomxml.dependencies.children().findAll{it.groupId == conf.groupId && it.artifactId 
-        == conf.artifactId}
-	println("remove '$dependencyToRemove'")
-	pomxml.dependencies.children().findAll{it.groupId == conf.groupId && it.artifactId 
-        == conf.artifactId}.replaceNode {}
+	def dependencyToRemove = pomxml.dependencies.'*'.find {it.groupId == conf.groupId && it.artifactId == conf.artifactId }
+	if(dependencyToRemove)
+	{
+		println("Removing '$conf.artifactId' dependency...")
+	  pomxml.dependencies.children().findAll{it.groupId == conf.groupId && it.artifactId == conf.artifactId}.replaceNode {}
+		println("'$conf.artifactId' dependency removed.")
+	}
+	
 /*def dependencyToRemove = pomxml.dependencies.'*'.find { it.groupId == conf.groupId && it.artifactId 
         == conf.artifactId
 }

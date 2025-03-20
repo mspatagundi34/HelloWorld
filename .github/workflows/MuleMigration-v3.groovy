@@ -157,36 +157,39 @@ def folderPath = "src/main/" // Replace with the actual path
 
 def folder = new File(folderPath)
 
-//folder.eachFileRecurse(FileType.FILES) {
 folder.eachFileRecurse(FileType.FILES) {
     File file -> 
 	def fileName = file.name.toLowerCase()
-	//if (file.name.toLowerCase().endsWith(".xml") || file.name.toLowerCase().endsWith(".dwl")) {
 	if (fileName.endsWith(".xml") || fileName.endsWith(".dwl")) {
-        def isFileUpdated = false
-        //def configXml = new XmlSlurper().parse(file)
-        def configXml = file.getText()
+
+	// Define var to identify whether file is modified or not
+        def isFileModified = false
+        //def fileData = new XmlSlurper().parse(file)
+        def fileContent = file.getText()
         configData.replaceData.each {
-            str -> if (configXml.contains(str.oldValue)) {
-                println "String '$str.oldValue' found in the file."
-                def modifiedContent = configXml.replaceAll(str.oldValue, str.newValue)
-                isFileUpdated = true
-                configXml = modifiedContent
+            str -> if (fileContent.contains(str.oldValue)) {
+                def modifiedContent = fileContent.replaceAll(str.oldValue, str.newValue)
+		println "String '$str.oldValue' found and replaced with '$str.newValue' in the file '$file'"
+		    
+                isFileModified = true // set true since file is modified
+                fileContent = modifiedContent
                 //println "$modifiedContent"
                 //XmlUtil.serialize(modifiedContent, new PrintWriter(file))
-            } else {
+            } 
+		/*else {
                 println "String '$str.oldValue' not found in the file '$file'"
-            }
+            } */
         }
-        if (isFileUpdated)
+        if (isFileModified)
         {
+		 println "Writring modified file '$file'"
 		if(fileName.endsWith(".xml"))
 		{
-		file.write(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)))
+		file.write(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(fileContent)))
 		}
 		else if(fileName.endsWith(".dwl"))
 		{
-			file.write(configXml)
+			file.write(fileContent)
 		}
 	}// Find the element containing the search string
     }

@@ -136,7 +136,8 @@ def dependencyToRemove = pomxml.dependencies.'*'.find { it.groupId == conf.group
 }
 	if (dependencyToRemove) {
     println("Removing '$conf.artifactId' dependency...")
-    pomxml.dependencies.remove(dependencyToRemove)
+    //pomxml.dependencies.remove(dependencyToRemove)
+		dependencyToRemove.parent().remove(dependencyToRemove)
     println("'$conf.artifactId' dependency removed.")
 } else {
     println("remove '$dependencyToRemove'")

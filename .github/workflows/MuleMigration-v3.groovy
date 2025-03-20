@@ -121,15 +121,28 @@ if (!targetNode4) {
     }
 }
 // Remove a specific dependency
-configData.dependenciesToRemove.each {
+/*configData.dependenciesToRemove.each {
     conf -> pomxml.dependencies.dependency.each {
         dependency -> if (dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId) {
              pomxml.dependencies.remove(true)
     	   println("removed '$conf.artifactId' dependency")
         }
     }
+}*/
+configData.dependenciesToRemove.each {
+    conf ->
+def dependencyToRemove = pomxml.dependencies.find {
+    dependency -> dependency.groupId == conf.groupId && dependency.artifactId 
+        == conf.artifactId
 }
-
+	if (dependencyToRemove) {
+    println("Removing mule-latency-connector dependency...")
+    xml.dependencies.remove(dependencyToRemove)
+    println("mule-latency-connector dependency removed.")
+} else {
+    println("mule-latency-connector dependency not found.")
+}
+}
 XmlUtil.serialize(pomxml, new PrintWriter(new File("pom.xml")))
 
 println "=====Finished Updating pom.xml====="

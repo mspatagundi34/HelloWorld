@@ -40,7 +40,7 @@ configData.dependencies.each {
     conf -> xml.dependencies.dependency.each {
         dependency -> if (dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId) {
             dependency.version = conf.version
-            println "Updated artifact '$dependency.artifactId'  to '$conf.version'"
+            println "Updated artifact '$dependency.artifactId' version to '$conf.version'"
         }
     }
 }
@@ -51,6 +51,8 @@ xml.repositories.repository.each {
     repo -> if (repo.id == "anypoint-exchange-v2") {
         repo.id = "anypoint-exchange-v3"
         repo.url = "https://maven.anypoint.mulesoft.com/api/v3/maven"
+
+	println "Updated respository '$repo.id'"
     }
 }
     
@@ -74,10 +76,10 @@ def targetNode4 = xml.pluginRepositories.'*'.find {
 
 // Append the new dependency node only if the target node is not present
 if (targetNode1) {
-    println "DataBase depdendency present"
+    println "DataBase dependency present"
     // Add new dependency because for java 17 xml bind dependency needed to mitigate serialization error
     if (!targetNode2) {
-        println "XML Bind depdendency not present"
+        println "javax.xml.bind dependency not present, it's required to mitigate serialization error, adding this dependency"
         xml.dependencies.appendNode {
             dependency {
                 groupId 'javax.xml.bind'
@@ -92,7 +94,6 @@ if (targetNode1) {
 
 // Append the new pluginRepository node only if the target node is not present
 if (!targetNode3) {
-    println "PluginRepository Node Not present"
     // Add new PluginRepository
     xml.pluginRepositories.appendNode {
         pluginRepository {
@@ -101,6 +102,7 @@ if (!targetNode3) {
             snapshots {
                 enabled true
             }
+	println "Added new plugin repository"
         }
     }
 }
@@ -119,17 +121,13 @@ if (!targetNode4) {
     }
 }
 // Remove a specific dependency
-def dependencyToRemove = xml.dependencies.find {
-    dependency -> dependency.groupId == "com.mulesoft.modules" && dependency.artifactId 
-        == "mule-latency-connector"
-}
-	
-if (dependencyToRemove) {
-    println("Removing mule-latency-connector dependency...")
-    xml.dependencies.remove(dependencyToRemove)
-    println("mule-latency-connector dependency removed.")
-} else {
-    println("mule-latency-connector dependency not found.")
+configData.dependenciesToRemove.each {
+    conf -> xml.dependencies.dependency.each {
+        dependency -> if (dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId) {
+             xml.dependencies.remove(dependencyToRemove)
+    	   println("removed '$conf.artifactId' dependency")
+        }
+    }
 }
 
 XmlUtil.serialize(xml, new PrintWriter(new File("pom.xml")))

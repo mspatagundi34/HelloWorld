@@ -183,6 +183,7 @@ def node = new XmlParser().parseText(configXml);
 new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)
 
 println stringWriter.toString()
+		file.write(XmlUtil.serialize(stringWriter.toString()))
 	}// Find the element containing the search string
     }
 }

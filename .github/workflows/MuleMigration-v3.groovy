@@ -153,12 +153,12 @@ println "Finished Updating mule-artifact.json"
 //-----------------------------------------------------------------------------------//
 
 println "=====Start Updating mule config xml files====="
-def folderPath = "src/main/mule" // Replace with the actual path
+def folderPath = "src/main" // Replace with the actual path
 
 def folder = new File(folderPath)
 
 folder.eachFile(FileType.FILES) {
-    File file -> if (file.name.toLowerCase().endsWith(".xml")) {
+    File file -> if (file.name.toLowerCase().endsWith(".xml") || file.name.toLowerCase().endsWith(".dwl")) {
         def isFileUpdated = false
         //def configXml = new XmlSlurper().parse(file)
         def configXml = file.getText()

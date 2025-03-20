@@ -186,7 +186,7 @@ folder.eachFile(FileType.FILES) {
 		//file.write(XmlUtil.serialize(new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)))
 		//file.write(stringWriter.toString())
 		//def dat = new XmlSlurper(false, false).parseText(configXml)
-		file.write(XmlUtil.serialize(new XmlSlurper(false, false).parseText(configXml), true))
+		file.write(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)))
 	}// Find the element containing the search string
     }
 }

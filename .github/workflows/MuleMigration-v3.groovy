@@ -7,20 +7,20 @@ println "=====Start Updating pom.xml====="
 
 // Load the pom.xml
 def pomFile = new File("pom.xml")
-def xml = new XmlSlurper(false, false).parse(pomFile)
+def pomxml = new XmlSlurper(false, false).parse(pomFile)
 
 // update artifact version
 //def version = (xml.version).split(".") 
-println "version $xml.version"
+println "version $pomxml.version"
 
 //Read config file
 def configData = new JsonSlurper().parseText(new File(".github/workflows/Config.json").text)
 
-xml.properties['app.runtime'] = configData.properties["app.runtime"]
-xml.properties['mule.maven.plugin.version'] = configData.properties["mule.maven.plugin.version"]
+pomxml.properties['app.runtime'] = configData.properties["app.runtime"]
+pomxml.properties['mule.maven.plugin.version'] = configData.properties["mule.maven.plugin.version"]
 
 // Update maven compiler plugin 
-xml.build.plugins.plugin.each {
+pomxml.build.plugins.plugin.each {
     plugin -> if (plugin.groupId == 'org.apache.maven.plugins' && plugin.artifactId == "maven-clean-plugin") {
         plugin.version = "3.2.0"
         plugin.configuration.source = "17"
@@ -37,7 +37,7 @@ xml.build.plugins.plugin.each {
 }
 
 configData.dependenciesToUpdate.each {
-    conf -> xml.dependencies.dependency.each {
+    conf -> pomxml.dependencies.dependency.each {
         dependency -> if (dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId) {
             dependency.version = conf.version
             println "Updated artifact '$dependency.artifactId' version to '$conf.version'"
@@ -47,7 +47,7 @@ configData.dependenciesToUpdate.each {
 
 
 // Update exchange repo url
-xml.repositories.repository.each {
+pomxml.repositories.repository.each {
     repo -> if (repo.id == "anypoint-exchange-v2") {
         repo.id = "anypoint-exchange-v3"
         repo.url = "https://maven.anypoint.mulesoft.com/api/v3/maven"
@@ -58,19 +58,19 @@ xml.repositories.repository.each {
     
 
 // Check if the depdendency node exists
-def targetNode1 = xml.dependencies.'*'.find {
+def targetNode1 = pomxml.dependencies.'*'.find {
     it.artifactId == 'mule-db-connector'
 }
 
-def targetNode2 = xml.dependencies.'*'.find {
+def targetNode2 = pomxml.dependencies.'*'.find {
     it.groupId == 'javax.xml.bind'
 }
 // Check if the plugin node exists
-def targetNode3 = xml.pluginRepositories.'*'.find {
+def targetNode3 = pomxml.pluginRepositories.'*'.find {
     it.id == 'synergian-repo'
 }
 
-def targetNode4 = xml.pluginRepositories.'*'.find {
+def targetNode4 = pomxml.pluginRepositories.'*'.find {
     it.artifactId == 'mule-objectstore-connector'
 }
 
@@ -80,7 +80,7 @@ if (targetNode1) {
     // Add new dependency because for java 17 xml bind dependency needed to mitigate serialization error
     if (!targetNode2) {
         println "javax.xml.bind dependency not present, it's required to mitigate serialization error, adding this dependency"
-        xml.dependencies.appendNode {
+        pomxml.dependencies.appendNode {
             dependency {
                 groupId 'javax.xml.bind'
                 artifactId 'jaxb-api'
@@ -95,7 +95,7 @@ if (targetNode1) {
 // Append the new pluginRepository node only if the target node is not present
 if (!targetNode3) {
     // Add new PluginRepository
-    xml.pluginRepositories.appendNode {
+    pomxml.pluginRepositories.appendNode {
         pluginRepository {
             id 'synergian-repo'
             url 'https://raw.github.com/synergian/wagon-git/releases'
@@ -111,7 +111,7 @@ if (!targetNode3) {
 if (!targetNode4) {
     println "Add objectstore dependency because latest studio sometime doesn't include java 17 compatiable objectstore as built in connector"
     // Add new PluginRepository
-    xml.dependencies.appendNode {
+    pomxml.dependencies.appendNode {
         dependency {
             groupId 'org.mule.connectors'
             artifactId 'mule-objectstore-connector'
@@ -122,15 +122,15 @@ if (!targetNode4) {
 }
 // Remove a specific dependency
 configData.dependenciesToRemove.each {
-    conf -> xml.dependencies.dependency.each {
+    conf -> pomxml.dependencies.dependency.each {
         dependency -> if (dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId) {
-             xml.dependencies.remove(dependencyToRemove)
+             pomxml.dependencies.remove(dependencyToRemove)
     	   println("removed '$conf.artifactId' dependency")
         }
     }
 }
 
-XmlUtil.serialize(xml, new PrintWriter(new File("pom.xml")))
+XmlUtil.serialize(pomxml, new PrintWriter(new File("pom.xml")))
 
 println "=====Finished Updating pom.xml====="
 //-----------------------------------------------------------------------------------//

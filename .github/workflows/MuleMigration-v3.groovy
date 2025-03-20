@@ -159,7 +159,7 @@ def folder = new File(folderPath)
 
 //folder.eachFileRecurse(FileType.FILES) {
 folder.eachFileRecurse(FileType.FILES) {
-    File file -> if (file.name.toLowerCase().endsWith(".xml")) {
+    File file -> if (file.name.toLowerCase().endsWith(".xml") || file.name.toLowerCase().endsWith(".dwl")) {
         def isFileUpdated = false
         //def configXml = new XmlSlurper().parse(file)
         def configXml = file.getText()

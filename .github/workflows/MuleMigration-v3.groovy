@@ -177,17 +177,8 @@ folder.eachFile(FileType.FILES) {
         if (isFileUpdated)
         {
             //XmlUtil.serialize(configXml, new PrintWriter(file))
-		//file.write(XmlUtil.serialize(configXml))
-		//def stringWriter = new StringWriter()
-//def node = new XmlParser().parseText(configXml);
-//new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)
-
-//println stringWriter.toString()
-		//file.write(XmlUtil.serialize(new XmlNodePrinter(new PrintWriter(stringWriter)).print(node)))
-		//file.write(stringWriter.toString())
-		//def dat = new XmlSlurper(false, false).parseText(configXml)
+		XmlUtil.serialize(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)), new PrintWriter(file))
 		//file.write(XmlUtil.serialize(new XmlSlurper(false, false, true).parseText(configXml)))
-		file.write(XmlUtil.serialize(new XmlSlurper().parseText(configXml)))
 	}// Find the element containing the search string
     }
 }

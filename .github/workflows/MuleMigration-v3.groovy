@@ -124,7 +124,7 @@ if (!targetNode4) {
 configData.dependenciesToRemove.each {
     conf -> pomxml.dependencies.dependency.each {
         dependency -> if (dependency.groupId == conf.groupId && dependency.artifactId == conf.artifactId) {
-             pomxml.dependencies.remove(dependency)
+             pomxml.dependencies.remove(true)
     	   println("removed '$conf.artifactId' dependency")
         }
     }

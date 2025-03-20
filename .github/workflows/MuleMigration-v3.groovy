@@ -61,7 +61,7 @@ pomxml.repositories.repository.each {
 def targetNode1 = pomxml.dependencies.'*'.find {
     it.artifactId == 'mule-db-connector'
 }
-
+println "targetNode1 is '$targetNode3'"
 def targetNode2 = pomxml.dependencies.'*'.find {
     it.groupId == 'javax.xml.bind'
 }
@@ -69,7 +69,7 @@ def targetNode2 = pomxml.dependencies.'*'.find {
 def targetNode3 = pomxml.pluginRepositories.'*'.find {
     it.id == 'synergian-repo'
 }
-println "targetNode3 is '$targetNode3'"
+
 def targetNode4 = pomxml.pluginRepositories.'*'.find {
     it.artifactId == 'mule-objectstore-connector'
 }

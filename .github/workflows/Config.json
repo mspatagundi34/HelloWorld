@@ -1,8 +1,10 @@
 {
+"properties": {
     "app.runtime" : "4.9.0",
     "mule.maven.plugin.version": "4.3.0",
-    "javaSpecificationVersions": ["17"],
-    "dependencies":
+    "javaSpecificationVersions": ["17"]
+    },
+    "dependenciesToUpdate":
     [
         {
                 "groupId" : "org.mule.connectors",
@@ -28,14 +30,24 @@
                 "groupId" : "org.mulesoft.connectors",
                 "artifactId" : "mule-objectstore-connector",
                 "version" : "1.2.2"
-            } ,
+            },
             {
                 "groupId" : "javax.xml.bind",
                 "artifactId" : "jaxb-api",
                 "version" : "2.3.1"
             }       
     ],
-    "replaceData": [
+    "dependenciesToRemove": [ 
+        {
+                "groupId" : "com.mulesoft.connectors",
+                "artifactId" : "mule-salesforce-connector"
+            } ,
+              {
+                "groupId" : "org.mulesoft.connectors",
+                "artifactId" : "mule-objectstore-connector"
+            }],
+    
+    "replaceDeprecatedValues": [
         {
             "oldValue": "error.muleMessage",
             "newValue": "error.errorMessage"

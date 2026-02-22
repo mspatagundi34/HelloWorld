@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+    commands:
+      - echo Using Java 17
+      - mvn -version
+
+  build:
+    commands:
+      - echo Deploying Mule application to CloudHub 2.0
+      - mvn mule:deploy \
+          -Danypoint.username=$ANYPOINT_USERNAME \
+          -Danypoint.password=$ANYPOINT_PASSWORD \
+          -Danypoint.environment=$ANYPOINT_ENV \
+          -DskipTests
+
+artifacts:
+  files:
+    - '**/*'
